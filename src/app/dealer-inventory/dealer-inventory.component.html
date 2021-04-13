@@ -1,12 +1,25 @@
 <h1>Current Inventory</h1>
+
 <p *ngIf ="inventory.length == 0">There are no cars in inventory</p>
+
 <div *ngFor = "let car of inventory; trackByVIN"
     [ngClass]="{'featured-item': car.featured}">
+
     <p>
         <button (click)= "deleteVehicle(car)">Delete</button>
     </p>
+
     <h3>  {{car.year}} {{car.make}}, {{car.model}}</h3>
+
+    <p class="gallery">
+        <app-photo-gallery
+        (on-navigate)="handlePhotoNavigation($event, car)"
+        *ngIf="car.photos.length > 0 " [photos]="car.photos">
+    </app-photo-gallery>
+    </p>
+
     <p *ngIf = "car.featured">Featured car of the month!</p>
     <p> Vin: {{car.VIN}}</p>
     <p>{{car.mileage}} Miles, ${{car.price}}</p>
+    
 </div>
