@@ -1,0 +1,29 @@
+<form ngForm #myForm="ngForm">
+    VIN:<br/>
+    <input type = 'text' name='veh_vin' #vin="ngModel" [ngModel]="vehicle.VIN" required minlength="3"/>
+    <span class="error" *ngIf="vin.invalid && vin.dirty">Must be 3 characters</span><br/>
+    Year:<br/>
+    <input type = 'number' name='veh_year' #year="ngModel" [ngModel]="vehicle.year" required minlength = "4"/><br/>
+    <span class="error" *ngIf="year.invalid && year.dirty">Must be greater than 1950</span><br/>
+    Make:<br/>
+    <input type = 'text' name='veh_make' [ngModel]="vehicle.make" /><br/>
+    Model:<br/>
+    <input type = 'text' name='veh_model' [ngModel]="vehicle.model"/><br/>
+    Mileage:<br/>
+    <input type = 'number' name='veh_mileage' [ngModel]="vehicle.mileage" required minlength = "1"/><br/>
+    Price:<br/>
+    <input type = 'number' name='veh_price' [ngModel]="vehicle.price" required minlength = "1"/><br/>
+    <label>
+        <input type = 'checkbox' name='veh_featured' [ngModel]="vehicle.featured"/><br/>
+        Featured Vehicle
+    </label>
+    
+    <p *ngIf = "myForm.invalid" class = "error">Please enter valid values.</p>
+    <br/>
+
+    <button (click)="handleSubmit(myForm)"
+    [disabled]= "myForm.invalid">Submit</button>
+
+   
+
+</form>

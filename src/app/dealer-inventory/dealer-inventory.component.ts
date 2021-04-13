@@ -67,6 +67,22 @@ export class DealerInventoryComponent implements OnInit {
     }
   }
 
+  addVehicle(v:Vehicle){
+    this.inventory.push(v)
+  }
+  
+  vehicleToEdit:Vehicle = undefined
+
+  beginEditing(v:Vehicle){
+    this.vehicleToEdit = v
+  }
+
+  commitEdit(v:Vehicle){
+    //copy the edited data
+    Object.assign(this.vehicleToEdit, v)
+    this.vehicleToEdit = undefined
+  }
+
   constructor() { }
 
   ngOnInit(): void {
