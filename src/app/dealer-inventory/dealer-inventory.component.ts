@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vehicle } from '../vehicle'
 import { InventoryService } from '../inventory.service'
 
@@ -10,15 +10,18 @@ import { InventoryService } from '../inventory.service'
 export class DealerInventoryComponent implements OnInit {
 
 
- inventory:Vehicle [] = []
+  inventory:Vehicle [] = []
+  
 
   trackByVIN(index:number, car:Vehicle) : string {
     return car.VIN
   }
 
   deleteVehicle(car:Vehicle){
-    this.inventorySvc.deleteVehicle(car)
-    this.inventory= this.inventorySvc.getInventory()
+    this.inventorySvc.deleteVehicle(car).subscribe(()=>{
+      this.inventory = this.inventory.filter(v=> v.VIN !== car.VIN)
+    })
+    
   }
 
   handlePhotoNavigation(photoIndex:number, car:Vehicle){
@@ -28,8 +31,9 @@ export class DealerInventoryComponent implements OnInit {
   }
 
   addVehicle(v:Vehicle){
-    this.inventorySvc.addVehicle(v)
-    this.inventory = this.inventorySvc.getInventory()
+   this.inventorySvc.addVehicle(v).subscribe(()=>{
+     this.inventory.push(v)
+   })  
   }
   
   vehicleToEdit:Vehicle = undefined
@@ -39,14 +43,18 @@ export class DealerInventoryComponent implements OnInit {
   }
 
   commitEdit(v:Vehicle){
-   this.inventorySvc.updateVehicle(this.vehicleToEdit.VIN,v)
-   this.inventory = this.inventorySvc.getInventory()
+   this.inventorySvc.updateVehicle(this.vehicleToEdit.VIN,v).subscribe(()=>
+   {
+     Object.assign(this.vehicleToEdit,v)
+     this.vehicleToEdit = undefined
+   })
   }
 
   constructor( private inventorySvc:InventoryService) { }
 
   ngOnInit(): void {
-    this.inventory = this.inventorySvc.getInventory()
+    this.inventorySvc.getInventory()
+    .subscribe(list => this.inventory = list)
   }
 
 }
