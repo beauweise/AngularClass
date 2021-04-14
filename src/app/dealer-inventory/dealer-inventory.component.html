@@ -23,7 +23,7 @@
 
     <p *ngIf = "car.featured">Featured car of the month!</p>
     <p> Vin: {{car.VIN}}</p>
-    <p>{{car.mileage}} Miles, ${{car.price}}</p>
+    <p>{{car.mileage | number}} Miles, {{car.price| currency}}</p>
     <app-vehicle-form-reactive 
     *ngIf="vehicleToEdit == car"
     [vehicle]="car"
