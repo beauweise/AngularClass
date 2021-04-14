@@ -1,6 +1,6 @@
 <h1>Current Inventory</h1>
 
-<app-vehicle-form (on-submit)="addVehicle($event)"></app-vehicle-form>
+<app-vehicle-form-reactive (on-submit)="addVehicle($event)"></app-vehicle-form-reactive>
 
 <p *ngIf ="inventory.length == 0">There are no cars in inventory</p>
 
@@ -24,13 +24,13 @@
     <p *ngIf = "car.featured">Featured car of the month!</p>
     <p> Vin: {{car.VIN}}</p>
     <p>{{car.mileage}} Miles, ${{car.price}}</p>
-    <app-vehicle-form 
+    <app-vehicle-form-reactive 
     *ngIf="vehicleToEdit == car"
     [vehicle]="car"
     (on-submit)="commitEdit($event)"
     
     >
-</app-vehicle-form>
+    </app-vehicle-form-reactive>
     
 </div>
 <!-- [showCancel]="true" -->
